@@ -19,6 +19,7 @@
     "gulp": "^4.0.2",
     "gulp-auto-imports": "^3.1.1",
     "gulp-sass": "^4.1.0",
-    "sass": "^1.30.0"
+    "sass": "^1.30.0",
+    "video-extensions": "^1.1.0"
   }
 }

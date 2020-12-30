@@ -4,6 +4,7 @@ const { src, dest, parallel, series, watch } = require('gulp')
 const sass = require('gulp-sass')
 sass.compiler = require('sass')
 const autoImports = require('gulp-auto-imports')
+const videExtentions = require('video-extensions')
 
 
 const SRC_PATH = 'src'
@@ -38,6 +39,12 @@ function copyHTML() {
     .pipe(dest(path.join(ASSETS_PATH, 'html')))
 }
 
+function copyVideos() {
+    return src(videExtentions.map(videoExtention => path.join(SRC_PATH, `blocks/*.${videoExtention}`)))
+    .pipe(dest(path.join(ASSETS_PATH, 'videos')))
+}
+
 exports.compileSCSS = compileSCSS
 exports.default = autoImport
 exports.copyHTML = copyHTML
+exports.copyVideos = copyVideos
