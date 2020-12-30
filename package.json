@@ -18,6 +18,8 @@
     "browser-sync": "^2.26.13",
     "gulp": "^4.0.2",
     "gulp-auto-imports": "^3.1.1",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-notify": "^3.2.0",
     "gulp-sass": "^4.1.0",
     "sass": "^1.30.0",
     "video-extensions": "^1.1.0"

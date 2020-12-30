@@ -3,6 +3,8 @@ const fs = require('fs')
 const { src, dest, parallel, series, watch } = require('gulp')
 const sass = require('gulp-sass')
 sass.compiler = require('sass')
+const notify = require('gulp-notify')
+const autoprefixer = require('gulp-autoprefixer')
 const autoImports = require('gulp-auto-imports')
 const videExtentions = require('video-extensions')
 
@@ -24,7 +26,12 @@ function autoImport() {
 
 function compileSCSS() {
     return src(path.join(SRC_PATH, '**/*.scss'))
-        .pipe(sass.sync())
+        .pipe(sass({
+            outputStyle: 'expanded'
+        }).on('error', notify.onError()))
+        .pipe(autoprefixer({
+            cascade: false
+        }))
         .pipe(dest(path.join(ASSETS_PATH, '/css')))
 }
 
