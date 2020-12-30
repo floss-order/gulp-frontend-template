@@ -5,7 +5,10 @@ const sass = require('gulp-sass')
 sass.compiler = require('sass')
 const notify = require('gulp-notify')
 const autoprefixer = require('gulp-autoprefixer')
+const sourcemaps = require('gulp-sourcemaps')
 const autoImports = require('gulp-auto-imports')
+const rename = require('gulp-rename')
+const cleanCSS = require('gulp-clean-css')
 const videExtentions = require('video-extensions')
 
 
@@ -26,13 +29,21 @@ function autoImport() {
 
 function compileSCSS() {
     return src(path.join(SRC_PATH, '**/*.scss'))
-        .pipe(sass({
-            outputStyle: 'expanded'
-        }).on('error', notify.onError()))
-        .pipe(autoprefixer({
-            cascade: false
-        }))
-        .pipe(dest(path.join(ASSETS_PATH, '/css')))
+    .pipe(sourcemaps.init())
+    .pipe(sass({
+        outputStyle: 'expanded'
+    }).on('error', notify.onError()))
+    .pipe(rename({
+        suffix: '.min'
+    }))
+    .pipe(autoprefixer({
+        cascade: false
+    }))
+    .pipe(cleanCSS({
+        level: 2
+    }))
+    .pipe(sourcemaps.write('.'))
+    .pipe(dest(path.join(ASSETS_PATH, '/css')))
 }
 
 function copyHTML() {
