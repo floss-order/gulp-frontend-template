@@ -89,8 +89,4 @@ function watchChanges() {
     watch(videExtentions.map(videoExtention => path.join(SRC_PATH, `blocks/*.${videoExtention}`)), copyVideos)
 }
 
-exports.compileSCSS = compileSCSS
-exports.default = autoImport
-exports.copyHTML = copyHTML
-exports.copyVideos = copyVideos
-exports.copyImages = copyImages
+exports.default = series(autoImport, compileSCSS, copyImages, copyVideos, copyHTML, watchChanges)
