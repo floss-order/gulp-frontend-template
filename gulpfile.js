@@ -44,7 +44,17 @@ function copyVideos() {
     .pipe(dest(path.join(ASSETS_PATH, 'videos')))
 }
 
+function copyImages() {
+    return src([
+                path.join(SRC_PATH, 'blocks/*.png'),
+                path.join(SRC_PATH, 'blocks/*.jpg'), 
+                path.join(SRC_PATH, 'blocks/*.jpeg')
+            ])
+    .pipe(dest(path.join(ASSETS_PATH, 'images')))
+}
+
 exports.compileSCSS = compileSCSS
 exports.default = autoImport
 exports.copyHTML = copyHTML
 exports.copyVideos = copyVideos
+exports.copyImages = copyImages
