@@ -27,5 +27,17 @@ function compileSCSS() {
         .pipe(dest(path.join(ASSETS_PATH, '/css')))
 }
 
+function copyHTML() {
+    src(path.join(SRC_PATH, 'html', 'index.html'))
+    .pipe(dest(BUILD_PATH))
+
+    const HTMLArray = fs.readdirSync(path.join(SRC_PATH, 'html'))
+    const filteredHTMLArray = HTMLArray.filter(value => value !== 'index.html')
+
+    return src(filteredHTMLArray.map(htmlFile => path.join(SRC_PATH, 'html', htmlFile)))
+    .pipe(dest(path.join(ASSETS_PATH, 'html')))
+}
+
 exports.compileSCSS = compileSCSS
 exports.default = autoImport
+exports.copyHTML = copyHTML
