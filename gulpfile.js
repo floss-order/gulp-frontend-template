@@ -10,6 +10,7 @@ const autoImports = require('gulp-auto-imports')
 const rename = require('gulp-rename')
 const cleanCSS = require('gulp-clean-css')
 const videExtentions = require('video-extensions')
+const browserSync = require('browser-sync').create()
 
 
 const SRC_PATH = 'src'
@@ -69,6 +70,23 @@ function copyImages() {
                 path.join(SRC_PATH, 'blocks/*.jpeg')
             ])
     .pipe(dest(path.join(ASSETS_PATH, 'images')))
+}
+
+function watchChanges() {
+    browserSync.init({
+        server: {
+            baseDir: BUILD_PATH
+        }
+    })
+
+    watch(path.join(SRC_PATH, '**/*.scss'), series(autoImport, compileSCSS))
+    watch(path.join(SRC_PATH, 'html', '*.html'), copyHTML)
+    watch(path.join([
+        path.join(SRC_PATH, 'blocks/*.png'),
+        path.join(SRC_PATH, 'blocks/*.jpg'), 
+        path.join(SRC_PATH, 'blocks/*.jpeg')
+    ], copyImages))
+    watch(videExtentions.map(videoExtention => path.join(SRC_PATH, `blocks/*.${videoExtention}`)), copyVideos)
 }
 
 exports.compileSCSS = compileSCSS
